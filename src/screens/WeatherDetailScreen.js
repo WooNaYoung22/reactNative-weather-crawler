@@ -96,29 +96,7 @@ export default class WeatherDetailScreen extends React.Component {
     });
   }
 
-  renderGoogleMap() {
-    const { 
-      lat, lon
-    } = this.state.coord;
-
-    const googleApiKey = _get(Constants, ['manifest', 'extra', 'googleApiKey'], null);
-
-    if (!googleApiKey) {
-      return undefined;
-    }
-
-    const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lon}&markers=color:red%7C${lat},${lon}&zoom=9&size=400x400&maptype=roadmap&key=${googleApiKey}`;
-
-    return (
-      <View style={styles.mapContainer}>
-        <Image style={styles.mapImage}
-          resizeMode={'stretch'}
-          resizeMethod={'scale'}
-          source={{ uri: url, }}
-        />
-      </View>
-    );
-  }
+  
 
   render() {
     const {
@@ -147,7 +125,7 @@ export default class WeatherDetailScreen extends React.Component {
           {this.renderWeatherCondition()}
         </View>
 
-        {this.renderGoogleMap()}
+   
       </View>
     );
   }
