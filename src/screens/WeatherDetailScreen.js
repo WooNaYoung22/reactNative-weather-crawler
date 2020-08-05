@@ -59,7 +59,7 @@ export default class WeatherDetailScreen extends React.Component {
     
     const arrowStyle = {
       transform: [
-         { rotate: `${deg}deg`}
+          { rotate: `${deg}deg`}
       ],
       width: 24,
       height: 24,
@@ -124,8 +124,6 @@ export default class WeatherDetailScreen extends React.Component {
         <View style={styles.inRow}>
           {this.renderWeatherCondition()}
         </View>
-
-   
       </View>
     );
   }

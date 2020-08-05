@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, ImageBackground, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import cityListApi from '../api/CityListApi';
 
 export default class CityList extends React.Component {
@@ -37,28 +37,40 @@ export default class CityList extends React.Component {
 
   render() {
     return (
-      <FlatList style={styles.container}
-                numColumns={3}
-                renderItem={({ item }) => this.renderItem(item)}
-                keyExtractor={item => item}
-                data={this.state.cities}
-      />
+      <View>
+        <ImageBackground source={require("../image/cityback2.png")} style={styles.bgimage}>
+          <View>
+            <FlatList style={styles.container}
+              numColumns={3}
+              renderItem={({ item }) => this.renderItem(item)}
+              keyExtractor={item => item}
+              data={this.state.cities}
+            />
+          </View>
+        </ImageBackground>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+
   },
   item: {
     flex: 1,
     height: 50,
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#fff',
   },
   text: {
-    fontSize: 14,
+    fontSize: 18,
     textAlign: 'center',
+    color: '#fff',
+  },
+  bgimage: {
+    width: '100%',
+    height: '100%',
   }
 });
