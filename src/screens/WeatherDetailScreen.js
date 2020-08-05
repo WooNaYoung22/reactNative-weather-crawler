@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
+import { ImageBackground, ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
@@ -31,7 +31,12 @@ export default class WeatherDetailScreen extends React.Component {
     const celsius = this.state.main.temp - 273.15;
 
     return (
-      <Text>온도: {celsius.toFixed(1)}</Text>
+      <View style={[styles.inRow, styles.alignItemInCenter]}>
+        <View>
+          <MaterialCommunityIcons name="thermometer" size={33} color="black" />
+        </View>
+        <Text style={styles.temperatureTextCondition}> {celsius.toFixed(1)}°</Text>
+      </View>
     )
   }
 
@@ -87,8 +92,8 @@ export default class WeatherDetailScreen extends React.Component {
         <View style={styles.weatherCondition} key={index}>
           <Image source={{
             uri: `http://openweathermap.org/img/wn/${icon}@2x.png`,
-            width: 72,
-            height: 48
+            width: 90,
+            height: 60
           }} />
           <Text style={styles.textCondition}>{description}</Text>
         </View>
@@ -117,13 +122,23 @@ export default class WeatherDetailScreen extends React.Component {
     }
     
     return (
-      <View style={styles.container}>
-        {this.renderClouds()}
-        {this.renderTemperature()}
-        {this.renderWind()}
-        <View style={styles.inRow}>
-          {this.renderWeatherCondition()}
-        </View>
+      <View>
+        <ImageBackground style={styles.background} source={{ uri: 'https://user-images.githubusercontent.com/55876368/89105471-5e284a80-d45c-11ea-8ee5-cdcfdb2a2995.jpg'}}>
+          <View>
+            <Text style={styles.cityText}>{city}</Text>
+
+            <View style={styles.container}>
+              {this.renderTemperature()}
+              <View style={styles.marginFromTemperature}>
+                {this.renderClouds()}
+                {this.renderWind()}
+              </View>
+              <View style={styles.inRow}>
+                {this.renderWeatherCondition()}
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -131,8 +146,8 @@ export default class WeatherDetailScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#8888FF',
+    //flex: 1,
+    //backgroundColor: '#8888FF',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -153,7 +168,8 @@ const styles = StyleSheet.create({
   weatherCondition: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
+    marginTop: 30
   },
   textCondition: {
     color: '#FFF',
@@ -162,5 +178,23 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     transform: [{ rotate: "5deg" }]
+  },
+  background: {
+    width: '100%',
+    height: '100%'
+  },
+  cityText: {
+    color: '#000000',
+    fontWeight: 'bold',
+    fontSize: 30,
+    textAlign: 'center',
+    marginTop: 95,
+    marginBottom: 28
+  },
+  temperatureTextCondition: {
+    fontSize: 35
+  },
+  marginFromTemperature: {
+    marginTop: 35
   }
 });
