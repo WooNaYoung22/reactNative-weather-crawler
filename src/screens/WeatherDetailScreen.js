@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
+import { ImageBackground, ActivityIndicator, Image, StyleSheet, View, Text,Button } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
@@ -11,6 +11,7 @@ export default class WeatherDetailScreen extends React.Component {
 
     this.state = {
       isLoading: true,
+      detail : [],
     };
   }
 
@@ -81,6 +82,12 @@ export default class WeatherDetailScreen extends React.Component {
       </View>
     );
   }
+  onPressCity(item) {
+    console.log('onPressCity =', item);
+    this.props.navigation.navigate('MoreDetail', {
+        detail: item
+    })
+}
 
   renderWeatherCondition() {
     // https://openweathermap.org/weather-conditions
@@ -136,6 +143,7 @@ export default class WeatherDetailScreen extends React.Component {
               <View style={styles.inRow}>
                 {this.renderWeatherCondition()}
               </View>
+              <Button title={'click me!'} onPress={() =>  this.onPressCity(this.state.detail)}/>
             </View>
           </View>
         </ImageBackground>
