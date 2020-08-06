@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import _map from 'lodash.map';
+import { StyleSheet, View, Text,ImageBackground } from 'react-native';
+
 
 export default class MoreDatailScreen extends React.Component {
     
@@ -17,6 +17,7 @@ export default class MoreDatailScreen extends React.Component {
 
     }
     render() {
+      
         const {
             route: {
               params: { detail },
@@ -24,49 +25,50 @@ export default class MoreDatailScreen extends React.Component {
             navigation,
           } = this.props;
 
+          navigation.setOptions({ title: '상세정보' });
         
-        console.log(detail);
+       
 
         return (
             <View style={styles.container}>
-                <Text>123</Text>
-                <Text>도시 이름 : {detail.name}</Text>
-                <Text>도시 습도 : {detail.dt}</Text>
-                <Text>{detail.base}</Text>
-                <Text>시계 : {detail.visibility}</Text>
-                <Text>{detail.dt}</Text>
-            
+                <ImageBackground style={styles.background} source={require("../image/detailBackground.png")}>
+                   
+                        <p>도시 이름 : {detail.name}</p>
+                        <p>시계 : {detail.visibility}</p>
+                        <p>날씨 : {detail.weather[0].main}</p>
+                        <p>날씨 상세 : {detail.weather[0].description}</p>
+                        <p>온도 : {detail.main.temp}</p>
+                        <p>기압 : {detail.main.pressure}</p>
+                        <p>습도 : {detail.main.humidity}</p>
+                        <p>최고온도 : {detail.main.temp_min}</p>
+                        <p>최저온도 : {detail.main.temp_max}</p>
+                        <p>풍속 : {detail.wind.speed}</p>
+                        <p>국가 : {detail.sys.country}</p>
+                        <p>일출 : {detail.sys.sunrise}</p>
+                        <p>일몰 : {detail.sys.sunset}</p>
+                   
+                </ImageBackground>
 
-                <Text>날씨 : {detail.weather[0].main}</Text>
-                <Text>{detail.weather[0].description}</Text>
-                <Text>{detail.weather[0].icon}</Text>
-
-                <Text>온도 : {detail.main.temp}</Text>
-                <Text>{detail.main.pressure}</Text>
-                <Text>{detail.main.humidity}</Text>
-                <Text>최고온도 : {detail.main.temp_min}</Text>
-                <Text>최저온도 : {detail.main.temp_max}</Text>
-                <Text>풍속 : {detail.wind.speed}</Text>
-                <Text>{detail.wind.deg}</Text>
-                <Text>{detail.clouds.all}</Text>
-                <Text>국가 : {detail.sys.country}</Text>
-                <Text>{detail.sys.message}</Text>
-                <Text>{detail.sys.sunrise}</Text>
-                <Text>{detail.sys.sunset}</Text>
-                
-              
-                
             </View>
+           
+                
+            
         );
 
     }
 };
-  
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFF',
         alignItems: 'center',
         justifyContent: 'center',
+       
     },
+    background: {
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+      },
+     
 });

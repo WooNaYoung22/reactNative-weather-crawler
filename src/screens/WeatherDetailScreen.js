@@ -22,14 +22,14 @@ export default class WeatherDetailScreen extends React.Component {
       .then(info => {
         console.log(info);
         this.setState({
-          ...info,
+          detail : info,
           isLoading: false,
         });
       });
   }
 
   renderTemperature() {
-    const celsius = this.state.main.temp - 273.15;
+    const celsius = this.state.detail.main.temp - 273.15;
 
     return (
       <View style={[styles.inRow, styles.alignItemInCenter]}>
@@ -42,7 +42,7 @@ export default class WeatherDetailScreen extends React.Component {
   }
 
   renderClouds() {
-    const clouds = _get(this.state, ['clouds', 'all'], null);
+    const clouds = _get(this.state.detail, ['clouds', 'all'], null);
 
     const cloudStatus = [
       '맑음',
@@ -60,8 +60,8 @@ export default class WeatherDetailScreen extends React.Component {
   }
 
   renderWind() {
-    const speed = _get(this.state, ['wind', 'speed'], null);
-    const deg = _get(this.state, ['wind', 'deg'], null);
+    const speed = _get(this.state.detail, ['wind', 'speed'], null);
+    const deg = _get(this.state.detail, ['wind', 'deg'], null);
     
     const arrowStyle = {
       transform: [
@@ -91,7 +91,7 @@ export default class WeatherDetailScreen extends React.Component {
 
   renderWeatherCondition() {
     // https://openweathermap.org/weather-conditions
-    return this.state.weather.map(({
+    return this.state.detail.weather.map(({
       icon,
       description,
     }, index) => {
@@ -143,14 +143,21 @@ export default class WeatherDetailScreen extends React.Component {
               <View style={styles.inRow}>
                 {this.renderWeatherCondition()}
               </View>
-              <Button title={'click me!'} onPress={() =>  this.onPressCity(this.state.detail)}/>
+              <View style={styles.submitButtonStyle}>
+              <Button color = {'#FA5882'}  title = {'상세정보'} onPress={() =>  this.onPressCity(this.state.detail)}>2px</Button>
+               
             </View>
+              
+              
+            </View>
+            
           </View>
         </ImageBackground>
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -204,5 +211,12 @@ const styles = StyleSheet.create({
   },
   marginFromTemperature: {
     marginTop: 35
-  }
+  },
+
+  submitButtonStyle: {
+    marginBottom:10,
+  },
+  
+
+
 });
