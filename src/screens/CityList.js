@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ImageBackground, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { SearchBar }  from 'react-native-elements';
 import cityListApi from '../api/CityListApi';
 
 export default class CityList extends React.Component {
@@ -8,6 +9,8 @@ export default class CityList extends React.Component {
 
     this.state = {
       cities: [],
+      search: '',
+      loading: false,
     };
   }
 
@@ -34,17 +37,46 @@ export default class CityList extends React.Component {
       </TouchableOpacity>
     );
   }
+  renderHeader = () => {
+    return (
+      <SearchBar
+        placeholder="도시를 입력하시오..."
+        value={this.state.value}
+        onChangeText={text => this.searchFilterFunction(text)}
+      />
+    )
+  }
+  searchFilterFunction = text => {
+    this.setState({
+      value: text
+    });
+
+    const newData = this.state.cities.filter(city => {
+      const cityData = city.toUpperCase();
+      const textData = text.toUpperCase();
+      return cityData.includes(textData);
+    });
+
+    this.setState({
+      data: newData
+    })
+  };
 
   render() {
+    const {search} = this.state;
+
+
     return (
       <View>
         <ImageBackground source={require("../image/cityback2.png")} style={styles.bgimage}>
           <View>
             <FlatList style={styles.container}
-              numColumns={3}
+              numColumns={5}
               renderItem={({ item }) => this.renderItem(item)}
               keyExtractor={item => item}
-              data={this.state.cities}
+              data={this.state.data}
+              extraData={this.state}
+              ListHeaderComponent={this.renderHeader}
             />
           </View>
         </ImageBackground>
